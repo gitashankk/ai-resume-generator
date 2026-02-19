@@ -20,11 +20,11 @@ It demonstrates automation in content creation, improving efficiency and formatt
 2. The program processes the input using structured AI logic.
 3. A professional resume and cover letter are generated.
 4. Output is displayed on screen or saved as a file.
-
+   
 ## Sample Output
 - Resume: [sample_resume.pdf](outputs/sample_resume.pdf)
 - Cover Letter: [sample_coverletter.pdf](outputs/sample_coverletter.pdf)
-
+![AI Project Screenshot](IMG_1706.png)
 ## Future Improvements
 - Add a web interface for easier user input
 - Export directly as PDF or Word documents
