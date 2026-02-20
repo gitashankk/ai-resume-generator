@@ -1,4 +1,4 @@
-python
+
 import streamlit as st
 
 st.title("AI Resume & Cover Letter Generator")
