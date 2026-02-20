@@ -1,3 +1,0 @@
-streamlit
-text
-Add requirements.txt for Streamlit
