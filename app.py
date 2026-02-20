@@ -22,17 +22,17 @@ col1, col2, col3 = st.columns(3)
 with col1:
     if st.button("Classic"):
         template = "Classic"
-    st.image("IMG1706", caption="Classic Template Example", use_column_width=True)
+    st.image("IMG_1706.png", caption="Classic Template Example", use_column_width=True)
 
 with col2:
     if st.button("Modern"):
         template = "Modern"
-    st.image("IMG1719", caption="Modern Template Example", use_column_width=True)
+    st.image("IMG_1719.jpeg", caption="Modern Template Example", use_column_width=True)
 
 with col3:
     if st.button("Creative"):
         template = "Creative"
-    st.image("IMG1722", caption="Creative Template Example", use_column_width=True)
+    st.image("IMG_1720.jpeg", caption="Creative Template Example", use_column_width=True)
 
 # Generate Resume button
 if st.button("Generate Resume"):
