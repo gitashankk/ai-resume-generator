@@ -1,69 +1,89 @@
 import streamlit as st
 
-st.set_page_config(page_title="AI Resume Generator", layout="centered")
+# --- App Config ---
+st.set_page_config(page_title="AI Resume Builder", layout="wide")
+st.title("AI Resume Builder")
+st.write("Create a professional, modern resume in minutes.")
 
-st.title("AI Resume Generator")
+# --- Sidebar Inputs ---
+st.sidebar.header("Enter Your Details")
 
-# Initialize Session State
-if "generated" not in st.session_state:
-    st.session_state.generated = False
+# Personal Info
+name = st.sidebar.text_input("Full Name", "Gita Shanker")
+email = st.sidebar.text_input("Email", "Gitas_1288@yahoo.com")
+phone = st.sidebar.text_input("Phone", "123-456-7890")
+city = st.sidebar.text_input("City", "Metuchen, NJ")
 
-# Input Section
-st.header("Enter Your Details")
+# Template Choice
+template = st.sidebar.selectbox("Choose Resume Template", ["Classic", "Modern"])
 
-name = st.text_input("Full Name")
-email = st.text_input("Email Address")
-summary = st.text_area("Professional Summary")
-skills = st.text_area("Skills (separate with commas)")
-education = st.text_area("Education")
-experience = st.text_area("Work Experience")
+# Professional Summary
+st.sidebar.subheader("Professional Summary")
+summary = st.sidebar.text_area(
+    "Summary", 
+    "Motivated and detail-oriented professional with a background in Computer and Information Systems and HR. Eager to contribute and grow in a professional role."
+)
 
-# Template Selection
-st.header("Choose Template")
-template = st.selectbox("Select Resume Style", ["Classic", "Modern"])
+# Skills
+st.sidebar.subheader("Skills (comma-separated)")
+skills = st.sidebar.text_area(
+    "Skills", 
+    "Java, OOP, HTML, CSS, JavaScript, SQL, MS Word, Excel, Outlook, Problem-solving, Teamwork, Communication, Time Management"
+)
 
-# Generate Button
-if st.button("Generate Resume"):
-    st.session_state.generated = True
-    st.success("Resume Generated Successfully!")
+# Education
+st.sidebar.subheader("Education")
+degree1 = st.sidebar.text_input("Degree 1", "Bachelor of Arts and Sciences")
+school1 = st.sidebar.text_input("School 1", "Rutgers University")
+year1 = st.sidebar.text_input("Year 1", "2024")
 
-# Resume Preview
-if st.session_state.generated:
+degree2 = st.sidebar.text_input("Degree 2", "Associate Degree in Computer and Information Systems")
+school2 = st.sidebar.text_input("School 2", "Middlesex College")
+year2 = st.sidebar.text_input("Year 2", "2022")
 
-    st.divider()
-    st.header("Resume Preview")
+# Work Experience
+st.sidebar.subheader("Work Experience")
+job_title = st.sidebar.text_input("Job Title", "Home-Based Business Owner")
+company = st.sidebar.text_input("Company", "Self-Managed")
+duration = st.sidebar.text_input("Duration", "Start Year – Present")
+responsibilities = st.sidebar.text_area(
+    "Responsibilities",
+    "Managed client communications, service delivery, and daily operations. Streamlined workflows and maintained financial records."
+)
 
-    if template == "Classic":
-
-        st.subheader(name)
-        st.write(email)
-
-        st.markdown("### Professional Summary")
+# --- Generate Resume ---
+if st.sidebar.button("Generate Resume"):
+    if template == "Modern":
+        # --- Modern: Two columns ---
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            st.header(f"{name}")
+            st.subheader("Professional Summary")
+            st.write(summary)
+            st.subheader("Work Experience")
+            st.markdown(f"**{job_title}** – {company} | {duration}")
+            st.write(responsibilities)
+            st.subheader("Education")
+            st.markdown(f"**{degree1}** – {school1}, {year1}")
+            st.markdown(f"**{degree2}** – {school2}, {year2}")
+        with col2:
+            st.subheader("Contact Info")
+            st.write(f"📧 {email}")
+            st.write(f"📞 {phone}")
+            st.write(f"📍 {city}")
+            st.subheader("Skills")
+            st.write(" • ".join([skill.strip() for skill in skills.split(",")]))
+    else:  # Classic template
+        st.header(f"{name}")
+        st.subheader("Contact Info")
+        st.write(f"📧 {email}  |  📞 {phone}  |  📍 {city}")
+        st.subheader("Professional Summary")
         st.write(summary)
-
-        st.markdown("### Skills")
-        st.write(skills)
-
-        st.markdown("### Education")
-        st.write(education)
-
-        st.markdown("### Experience")
-        st.write(experience)
-
-    elif template == "Modern":
-
-        st.markdown(f"""
-        <div style="background-color:#f4f6f8;padding:20px;border-radius:10px">
-            <h1 style="color:#1f4e79;">{name}</h1>
-            <p><strong>{email}</strong></p>
-            <hr>
-            <h3 style="color:#1f4e79;">Professional Summary</h3>
-            <p>{summary}</p>
-            <h3 style="color:#1f4e79;">Skills</h3>
-            <p>{skills}</p>
-            <h3 style="color:#1f4e79;">Education</h3>
-            <p>{education}</p>
-            <h3 style="color:#1f4e79;">Experience</h3>
-            <p>{experience}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.subheader("Work Experience")
+        st.markdown(f"**{job_title}** – {company} | {duration}")
+        st.write(responsibilities)
+        st.subheader("Education")
+        st.markdown(f"**{degree1}** – {school1}, {year1}")
+        st.markdown(f"**{degree2}** – {school2}, {year2}")
+        st.subheader("Skills")
+        st.write(" • ".join([skill.strip() for skill in skills.split(",")]))
