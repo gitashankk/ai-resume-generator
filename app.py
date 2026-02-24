@@ -67,3 +67,5 @@ if st.session_state.generated:
             <p>{experience}</p>
         </div>
         """, unsafe_allow_html=True)
+        st.markdown("---")  # Adds a horizontal line
+st.markdown("**Resume generated using Gita Shanker's
