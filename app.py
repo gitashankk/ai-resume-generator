@@ -1,65 +1,128 @@
 import streamlit as st
 
-st.title("AI Resume & Cover Letter Generator")
-st.write("Fill in your details below:")
+st.set_page_config(page_title="AI Resume Generator", layout="centered")
 
-# Input fields
-name = st.text_input("Full Name")
-email = st.text_input("Email")
-summary = st.text_area("Professional Summary / Objective")
-skills = st.text_area("Skills")
-education = st.text_area("Education (Degree, College, Year)")
-experience = st.text_area("Work Experience")
+st.title("AI Resume Generator")
 
-# Initialize template variable
-template = "Classic"  # default
+# -----------------------------
+# Initialize Session State
+# -----------------------------
+if "name" not in st.session_state:
+    st.session_state.name = ""
 
-st.write("### Choose a Resume Template:")
+if "email" not in st.session_state:
+    st.session_state.email = ""
 
-# Display images as clickable templates
-col1, col2, col3 = st.columns(3)
+if "summary" not in st.session_state:
+    st.session_state.summary = ""
 
-with col1:
-    if st.button("Classic"):
-        template = "Classic"
-    st.image("IMG_1706.png", caption="Classic Template Example", use_column_width=True)
+if "skills" not in st.session_state:
+    st.session_state.skills = ""
 
-with col2:
-    if st.button("Modern"):
-        template = "Modern"
-    st.image("IMG_1719.jpeg", caption="Modern Template Example", use_column_width=True)
+if "education" not in st.session_state:
+    st.session_state.education = ""
 
-with col3:
-    if st.button("Creative"):
-        template = "Creative"
-    st.image("IMG_1720.jpeg", caption="Creative Template Example", use_column_width=True)
+if "experience" not in st.session_state:
+    st.session_state.experience = ""
 
-# Generate Resume button
+if "template" not in st.session_state:
+    st.session_state.template = "Classic"
+
+if "generated" not in st.session_state:
+    st.session_state.generated = False
+
+
+# -----------------------------
+# Resume Input Section
+# -----------------------------
+st.header("Enter Your Details")
+
+st.session_state.name = st.text_input(
+    "Full Name", value=st.session_state.name
+)
+
+st.session_state.email = st.text_input(
+    "Email Address", value=st.session_state.email
+)
+
+st.session_state.summary = st.text_area(
+    "Professional Summary", value=st.session_state.summary
+)
+
+st.session_state.skills = st.text_area(
+    "Skills (separate with commas)", value=st.session_state.skills
+)
+
+st.session_state.education = st.text_area(
+    "Education", value=st.session_state.education
+)
+
+st.session_state.experience = st.text_area(
+    "Work Experience", value=st.session_state.experience
+)
+
+
+# -----------------------------
+# Template Selection
+# -----------------------------
+st.header("Choose Template")
+
+st.session_state.template = st.selectbox(
+    "Select Resume Style",
+    ["Classic", "Modern"],
+    index=["Classic", "Modern"].index(st.session_state.template),
+)
+
+
+# -----------------------------
+# Generate Button
+# -----------------------------
 if st.button("Generate Resume"):
+    st.session_state.generated = True
     st.success("Resume Generated Successfully!")
-    st.markdown("### Resume Preview")
 
-    if template == "Classic":
-        st.markdown(f"**Name:** {name}")
-        st.markdown(f"**Email:** {email}")
-        st.markdown(f"**Professional Summary:** {summary}")
-        st.markdown(f"**Skills:** {skills}")
-        st.markdown(f"**Education:** {education}")
-        st.markdown(f"**Experience:** {experience}")
 
-    elif template == "Modern":
-        st.markdown(f"<p style='color:blue; font-weight:bold'>Name: {name}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='color:blue'>Email: {email}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='color:blue'>Professional Summary: {summary}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='color:blue'>Skills: {skills}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='color:blue'>Education: {education}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='color:blue'>Experience: {experience}</p>", unsafe_allow_html=True)
+# -----------------------------
+# Resume Preview Section
+# -----------------------------
+if st.session_state.generated:
 
-    elif template == "Creative":
-        icon = "💼"
-        st.markdown(f"<p style='font-size:18px'>{icon} Name: {name}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p>{icon} Email: {email}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p>{icon} Professional Summary: {summary}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p>{icon} Skills: {skills}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p>{icon} Education: {education}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p>{icon} Experience: {experience}</p>", unsafe_allow_html=True)
+    st.divider()
+    st.header("Resume Preview")
+
+    if st.session_state.template == "Classic":
+
+        st.subheader(st.session_state.name)
+        st.write(st.session_state.email)
+
+        st.markdown("### Professional Summary")
+        st.write(st.session_state.summary)
+
+        st.markdown("### Skills")
+        st.write(st.session_state.skills)
+
+        st.markdown("### Education")
+        st.write(st.session_state.education)
+
+        st.markdown("### Experience")
+        st.write(st.session_state.experience)
+
+    elif st.session_state.template == "Modern":
+
+        st.markdown(
+            f"""
+            <div style="background-color:#f4f6f8;padding:20px;border-radius:10px">
+                <h1 style="color:#1f4e79;">{st.session_state.name}</h1>
+                <p><strong>{st.session_state.email}</strong></p>
+                <hr>
+                <h3 style="color:#1f4e79;">Professional Summary</h3>
+                <p>{st.session_state.summary}</p>
+                <h3 style="color:#1f4e79;">Skills</h3>
+                <p>{st.session_state.skills}</p>
+                <h3 style="color:#1f4e79;">Education</h3>
+                <p>{st.session_state.education}</p>
+                <h3 style="color:#1f4e79;">Experience</h3>
+                <p>{st.session_state.experience}</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
