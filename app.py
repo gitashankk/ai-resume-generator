@@ -1,14 +1,15 @@
 import streamlit as st
 
+# --- Page Config ---
 st.set_page_config(page_title="AI Resume Generator", layout="centered")
 
 st.title("AI Resume Generator")
 
-# Initialize Session State
+# --- Initialize Session State ---
 if "generated" not in st.session_state:
     st.session_state.generated = False
 
-# Input Section
+# --- Input Section ---
 st.header("Enter Your Details")
 
 name = st.text_input("Full Name")
@@ -18,16 +19,16 @@ skills = st.text_area("Skills (separate with commas)")
 education = st.text_area("Education")
 experience = st.text_area("Work Experience")
 
-# Template Selection
+# --- Template Selection ---
 st.header("Choose Template")
 template = st.selectbox("Select Resume Style", ["Classic", "Modern"])
 
-# Generate Button
+# --- Generate Button ---
 if st.button("Generate Resume"):
     st.session_state.generated = True
     st.success("Resume Generated Successfully!")
 
-# Resume Preview
+# --- Resume Preview ---
 if st.session_state.generated:
 
     st.divider()
@@ -50,6 +51,10 @@ if st.session_state.generated:
         st.markdown("### Experience")
         st.write(experience)
 
+        # --- Footer for Classic ---
+        st.markdown("---")
+        st.markdown("**Resume generated using Gita Shanker's AI Resume Builder**")
+
     elif template == "Modern":
 
         st.markdown(f"""
@@ -65,7 +70,7 @@ if st.session_state.generated:
             <p>{education}</p>
             <h3 style="color:#1f4e79;">Experience</h3>
             <p>{experience}</p>
+            <hr>
+            <p style="text-align:center;"><em>Resume generated using Gita Shanker's AI Resume Builder</em></p>
         </div>
         """, unsafe_allow_html=True)
-        st.markdown("---")  # Adds a horizontal line
-st.markdown("**Resume generated using Gita Shanker's
